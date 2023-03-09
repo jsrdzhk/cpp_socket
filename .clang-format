@@ -1,0 +1,13 @@
+BasedOnStyle: Google
+IndentWidth: 4
+---
+Language: Cpp
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: None
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+ColumnLimit: 150
+DerivePointerAlignment: false
+PointerAlignment: Left
