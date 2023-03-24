@@ -1,6 +1,9 @@
 #include "tcp_client.h"
 
 bool cppsocket::tcp_client::open_connection() {
+    if (!create_socket()) {
+        return false;
+    }
     // Connect to server, returning on failure
     if (connect(_sock, _address_info->ai_addr, (int)_address_info->ai_addrlen) == SOCKET_ERROR) {
         close();

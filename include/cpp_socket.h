@@ -3,7 +3,7 @@
  * @author: Rodney Cheung
  * @date: 2023-03-09 15:38:24
  * @last_author: Rodney Cheung
- * @last_edit_time: 2023-03-09 16:44:43
+ * @last_edit_time: 2023-03-22 15:33:59
  */
 
 #ifndef _CPP_SOCKET_H_
@@ -48,12 +48,14 @@ class socket_base {
     bool init_socket();
     void cleanup();
     void inet_pton(const char* host, struct sockaddr_in& saddr_in);
-    void set_udp_timeout(uint32_t msec);
-    static bool set_noblock(int fd, char* err_msg);
+    static void set_udp_timeout(int fd, uint32_t msec);
+    static bool set_noblock(int fd, char* err_msg, int err_msg_len);
+    static bool set_block(int fd, char* err_msg, int err_msg_len);
     bool epoll_wait(int timeout, bool read_ready, bool write_ready);
 
    public:
-    void close();
+    virtual void close();
+    virtual bool created();
 
     char* get_err_msg() {
         return _message;

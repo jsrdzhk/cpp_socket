@@ -10,16 +10,29 @@ class tcp_socket : public socket_base {
     SOCKET _conn = INVALID_SOCKET;
     addrinfo* _address_info = nullptr;
     bool _connected = false;
+    bool _conn_blocked = false;
 
    public:
-    bool send_data(void* buf, size_t len, bool block, int timeout);
-    int receive_data(void* buf, size_t len, bool block, int timeout);
+    bool create_socket();
+    bool send_data(void* buf, size_t len, int timeout);
+    int receive_data(void* buf, size_t len, int timeout);
+    void close() override;
     bool is_connected() {
         return _connected;
     }
+    void set_nonblock(bool block) {
+        if (block) {
+            if (socket_base::set_noblock(_conn, _message, ERR_MSG_BUF_LEN)) {
+                _conn_blocked = false;
+            }
+        } else {
+            if (socket_base::set_block(_conn, _message, ERR_MSG_BUF_LEN)) {
+                _conn_blocked = true;
+            }
+        }
+    }
 
    private:
-    bool create_socket();
 };
 }  // namespace cppsocket
 #endif
